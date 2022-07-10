@@ -1,0 +1,22 @@
+content:
+- toString()
+- Boxing and unboxing
+- The Map interface
+- HashMap
+- Anonymous classes
+- Lambda expressions
+- Functional interfaces
+- Generic methods
+- Standard functional interfaces
+- Optional
+- Declaring a method
+- Regexes in programs
+- Bean validation
+- LocalTime
+- LocalDate
+- LocalDateTime
+- Comparing dates and time
+- The utility class Collections
+- Abstract class
+- Builder
+- The for-loop

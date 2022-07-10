@@ -1,0 +1,23 @@
+type: choice
+is_multiple_choice: true
+options:
+- text: LocalTime.of(11, 50);
+- text: LocalTime.of(23, 30, 50).minusSeconds(30);
+- text: LocalTime.of(23, 50, 0).plusHours(24);
+- text: LocalTime.of(23, 50, 30).withSecond(0);
+- text: LocalTime.of(23, 50);
+files:
+- name: src/Task.java
+  visible: true
+  text: |
+    // You can experiment here, it won’t be checked
+
+    public class Task {
+      public static void main(String[] args) {
+        // put your code here
+      }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2878#comment
+status: Solved
+record: -1
