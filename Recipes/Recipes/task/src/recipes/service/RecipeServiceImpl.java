@@ -74,7 +74,7 @@ public class RecipeServiceImpl implements RecipeService {
         update.setDirections(recipe.getDirections());
         update.setDate(LocalDateTime.now().toString());
 
-        recipeRepository.save(update);
+        this.recipeRepository.save(update);
 
         return new ResponseEntity<>("(No Content)", HttpStatus.NO_CONTENT);
     }

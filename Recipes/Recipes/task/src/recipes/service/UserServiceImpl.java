@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(User user) {
 
-        Optional<User> o = Optional.ofNullable(userRepository.findUserByEmail(user.getEmail()));
+        Optional<User> o = Optional.ofNullable(this.userRepository.findUserByEmail(user.getEmail()));
 
         if (o.isPresent()) {
             throw new UserExistsException("(Bad Request)");
@@ -29,6 +29,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRole("ROLE_USER");
 
-        userRepository.save(user);
+        this.userRepository.save(user);
     }
 }
