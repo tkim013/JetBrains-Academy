@@ -1031,23 +1031,6 @@ files:
         Object getEmployeePayroll(String period, UserDetailsImpl details);
     }
   learner_created: true
-- name: src/account/model/StatusResponse.java
-  visible: true
-  text: |
-    package account.model;
-
-    import lombok.AllArgsConstructor;
-    import lombok.Getter;
-    import lombok.Setter;
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    public class PaymentResponse {
-
-        private String status;
-    }
-  learner_created: true
 - name: src/account/controller/AuthController.java
   visible: true
   text: |
@@ -1527,71 +1510,6 @@ files:
         }
     }
   learner_created: true
-- name: src/account/security/UserDetailsImpl.java
-  visible: true
-  text: |
-    package account.security;
-
-    import account.entity.User;
-    import org.springframework.security.core.GrantedAuthority;
-    import org.springframework.security.core.authority.SimpleGrantedAuthority;
-    import org.springframework.security.core.userdetails.UserDetails;
-
-    import java.util.Collection;
-    import java.util.List;
-
-    public class UserDetailsImpl implements UserDetails {
-
-        private final String email;
-        private final String password;
-        private final List<GrantedAuthority> rolesAndAuthorities;
-
-        public UserDetailsImpl(User user) {
-            this.email = user.getEmail();
-            this.password = user.getPassword();
-            this.rolesAndAuthorities = List.of(new SimpleGrantedAuthority(user.getRole()));
-        }
-
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            return this.rolesAndAuthorities;
-        }
-
-        @Override
-        public String getPassword() {
-            return this.password;
-        }
-
-        @Override
-        public String getUsername() {
-            return this.email;
-        }
-
-        public String getEmail() {
-            return this.email;
-        }
-
-        @Override
-        public boolean isAccountNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isAccountNonLocked() {
-            return true;
-        }
-
-        @Override
-        public boolean isCredentialsNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled() {
-            return true;
-        }
-    }
-  learner_created: true
 - name: src/account/entity/Payment.java
   visible: true
   text: |
@@ -1703,39 +1621,6 @@ files:
         @GetMapping("/user")
         void displayAllUsers() {
 
-        }
-    }
-  learner_created: true
-- name: src/account/security/UserDetailsServiceImpl.java
-  visible: true
-  text: |
-    package account.security;
-
-    import account.entity.User;
-    import account.repository.UserRepository;
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.security.core.userdetails.UserDetails;
-    import org.springframework.security.core.userdetails.UserDetailsService;
-    import org.springframework.security.core.userdetails.UsernameNotFoundException;
-    import org.springframework.stereotype.Service;
-
-    @Service
-    public class UserDetailsServiceImpl implements UserDetailsService {
-
-        @Autowired
-        UserRepository userRepository;
-
-        @Override
-        public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-            User user = this.userRepository.findUserByEmail(email.toLowerCase());
-
-            if (user == null){
-
-                throw new UsernameNotFoundException(email);
-            }
-
-            return new UserDetailsImpl(user);
         }
     }
   learner_created: true
@@ -1857,19 +1742,105 @@ files:
         ChangePasswordResponse changePassword(NewPassword newpassword, UserDetailsImpl details);
     }
   learner_created: true
-- name: src/account/DataLoader.java
+- name: src/account/security/UserDetailsImpl.java
   visible: true
+  text: |
+    package account.security;
+
+    import account.entity.User;
+    import org.springframework.security.core.GrantedAuthority;
+    import org.springframework.security.core.authority.SimpleGrantedAuthority;
+    import org.springframework.security.core.userdetails.UserDetails;
+
+    import java.util.Collection;
+    import java.util.List;
+
+    public class UserDetailsImpl implements UserDetails {
+
+        private final String email;
+        private final String password;
+        private final List<GrantedAuthority> rolesAndAuthorities;
+
+        public UserDetailsImpl(User user) {
+            this.email = user.getEmail();
+            this.password = user.getPassword();
+            this.rolesAndAuthorities = List.of(new SimpleGrantedAuthority(user.getRole()));
+        }
+
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            return this.rolesAndAuthorities;
+        }
+
+        @Override
+        public String getPassword() {
+            return this.password;
+        }
+
+        @Override
+        public String getUsername() {
+            return this.email;
+        }
+
+        public String getEmail() {
+            return this.email;
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+            return true;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return true;
+        }
+    }
   learner_created: true
-- name: src/account/entity/Group.java
+- name: src/account/security/UserDetailsServiceImpl.java
   visible: true
+  text: |
+    package account.security;
+
+    import account.entity.User;
+    import account.repository.UserRepository;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.security.core.userdetails.UserDetails;
+    import org.springframework.security.core.userdetails.UserDetailsService;
+    import org.springframework.security.core.userdetails.UsernameNotFoundException;
+    import org.springframework.stereotype.Service;
+
+    @Service
+    public class UserDetailsServiceImpl implements UserDetailsService {
+
+        @Autowired
+        UserRepository userRepository;
+
+        @Override
+        public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+            User user = this.userRepository.findUserByEmail(email.toLowerCase());
+
+            if (user == null){
+
+                throw new UsernameNotFoundException(email);
+            }
+
+            return new UserDetailsImpl(user);
+        }
+    }
   learner_created: true
-- name: src/account/repository/GroupRepository.java
-  visible: true
-  learner_created: true
-- name: src/account/security/CustomAccessDeniedHandler.java
-  visible: true
-  learner_created: true
-- name: src/account/model/DeleteUserResponse.java
+- name: src/account/exception/BadRequestException.java
   visible: true
   learner_created: true
 - name: src/account/exception/NotFoundException.java
@@ -1878,11 +1849,40 @@ files:
 - name: src/account/model/ChangeRole.java
   visible: true
   learner_created: true
-- name: src/account/exception/BadRequestException.java
+- name: src/account/entity/Group.java
+  visible: true
+  learner_created: true
+- name: src/account/DataLoader.java
+  visible: true
+  learner_created: true
+- name: src/account/security/CustomAccessDeniedHandler.java
+  visible: true
+  learner_created: true
+- name: src/account/repository/GroupRepository.java
   visible: true
   learner_created: true
 - name: src/account/security/MethodSecurityConfig.java
   visible: true
+  learner_created: true
+- name: src/account/model/DeleteUserResponse.java
+  visible: true
+  learner_created: true
+- name: src/account/model/StatusResponse.java
+  visible: true
+  text: |
+    package account.model;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Getter;
+    import lombok.Setter;
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public class PaymentResponse {
+
+        private String status;
+    }
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/16605#comment
 status: Solved

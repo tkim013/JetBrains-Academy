@@ -745,18 +745,6 @@ files:
         }
     }
   learner_created: true
-- name: src/account/exception/UserExistsException.java
-  visible: true
-  text: |
-    package account.exception;
-
-    public class UserExistsException extends RuntimeException {
-
-        public UserExistsException(String msg) {
-            super(msg);
-        }
-    }
-  learner_created: true
 - name: src/account/model/ChangePasswordResponse.java
   visible: true
   text: |
@@ -788,30 +776,6 @@ files:
     public class NewPassword {
 
         private String new_password;
-    }
-  learner_created: true
-- name: src/account/exception/SamePasswordException.java
-  visible: true
-  text: |
-    package account.exception;
-
-    public class SamePasswordException extends RuntimeException {
-
-        public SamePasswordException(String msg) {
-            super(msg);
-        }
-    }
-  learner_created: true
-- name: src/account/exception/PasswordBreachedException.java
-  visible: true
-  text: |
-    package account.exception;
-
-    public class PasswordBreachedException extends RuntimeException {
-
-        public PasswordBreachedException(String msg) {
-            super(msg);
-        }
     }
   learner_created: true
 - name: src/account/exception/CustomErrorMessage.java
@@ -1080,18 +1044,6 @@ files:
         private String role;
     }
   learner_created: true
-- name: src/account/exception/PasswordLengthException.java
-  visible: true
-  text: |
-    package account.exception;
-
-    public class PasswordLengthException extends RuntimeException{
-
-        public PasswordLengthException(String msg) {
-            super(msg);
-        }
-    }
-  learner_created: true
 - name: src/account/exception/ExceptionHandlerControllerAdvice.java
   visible: true
   text: |
@@ -1296,15 +1248,6 @@ files:
 - name: src/account/service/PaymentServiceImpl.java
   visible: true
   learner_created: true
-- name: src/account/exception/NonUniquePaymentException.java
-  visible: true
-  learner_created: true
-- name: src/account/exception/UserNotFoundException.java
-  visible: true
-  learner_created: true
-- name: src/account/exception/PaymentNotFoundException.java
-  visible: true
-  learner_created: true
 - name: src/account/model/PayrollResponse.java
   visible: true
   text: |
@@ -1329,6 +1272,66 @@ files:
   learner_created: true
 - name: src/account/model/UserResponse.java
   visible: true
+  learner_created: true
+- name: src/account/exception/SamePasswordException.java
+  visible: true
+  text: |
+    package account.exception;
+
+    public class SamePasswordException extends RuntimeException {
+
+        public SamePasswordException(String msg) {
+            super(msg);
+        }
+    }
+  learner_created: true
+- name: src/account/exception/PasswordBreachedException.java
+  visible: true
+  text: |
+    package account.exception;
+
+    public class PasswordBreachedException extends RuntimeException {
+
+        public PasswordBreachedException(String msg) {
+            super(msg);
+        }
+    }
+  learner_created: true
+- name: src/account/model/PaymentResponse.java
+  visible: true
+  learner_created: true
+- name: src/account/exception/UserNotFoundException.java
+  visible: true
+  learner_created: true
+- name: src/account/exception/NonUniquePaymentException.java
+  visible: true
+  learner_created: true
+- name: src/account/exception/UserExistsException.java
+  visible: true
+  text: |
+    package account.exception;
+
+    public class UserExistsException extends RuntimeException {
+
+        public UserExistsException(String msg) {
+            super(msg);
+        }
+    }
+  learner_created: true
+- name: src/account/exception/PaymentNotFoundException.java
+  visible: true
+  learner_created: true
+- name: src/account/exception/PasswordLengthException.java
+  visible: true
+  text: |
+    package account.exception;
+
+    public class PasswordLengthException extends RuntimeException{
+
+        public PasswordLengthException(String msg) {
+            super(msg);
+        }
+    }
   learner_created: true
 - name: src/account/exception/InvalidPeriodException.java
   visible: true
