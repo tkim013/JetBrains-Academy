@@ -9,14 +9,14 @@ import java.util.Scanner;
 
 public class NumberBaseConverter {
 
-    private static State state;
+    private final static int PRECISION = 5;
     private final static List<Character> baseChars = List.of('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F',
             'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
             'X', 'Y', 'Z');
 
     public static void main(String[] args) {
 
-        state = State.INPUT;
+        State state = State.INPUT;
 
         int sourceBase = 0;
         int targetBase = 0;
@@ -88,14 +88,14 @@ public class NumberBaseConverter {
 
                         input = option.split("\\.");
 
-                        result = (baseToDecimal(sourceBase, input[0].toUpperCase()));
+                        result = baseToDecimal(sourceBase, input[0].toUpperCase());
                         input[1] = fractionalBaseToDecimal(sourceBase, input[1].toUpperCase());
 
                         sb.append(decimalToBase(targetBase, result));
                         sb.append(".");
                         s = fractionalDecimalToBase(targetBase, input[1]);
-                        if (s.length() > 5) {
-                            s = s.substring(0, 5);
+                        if (s.length() > PRECISION) {
+                            s = s.substring(0, PRECISION);
                         }
                         sb.append(s);
 
@@ -158,7 +158,7 @@ public class NumberBaseConverter {
 
         try {
             if (Integer.parseInt(fractional) == 0) {
-                return "00000";
+                return "0".repeat(PRECISION);
             }
         } catch (NumberFormatException ignore) {
 
@@ -170,7 +170,8 @@ public class NumberBaseConverter {
 
         try {
             for (int i = 0; i < fractional.length(); i++) {
-                result = result.add(BigDecimal.valueOf(baseChars.indexOf(fractional.charAt(i))).divide(base, 5, RoundingMode.HALF_DOWN));
+                result = result.add(BigDecimal.valueOf(baseChars.indexOf(fractional.charAt(i)))
+                        .divide(base, PRECISION, RoundingMode.HALF_DOWN));
                 base = base.multiply(p);
             }
         } catch (Exception e) {
@@ -191,7 +192,7 @@ public class NumberBaseConverter {
             result.add(value.multiply(b).intValue());
             value = value.multiply(b).subtract(BigDecimal.valueOf(result.get(result.size() - 1)));
 
-            if (result.size() == 5) {
+            if (result.size() == PRECISION) {
                 break;
             }
         }
@@ -200,8 +201,8 @@ public class NumberBaseConverter {
             sb.append(baseChars.get(i));
         }
 
-        if (sb.length() < 5) {
-            sb.append("0".repeat(Math.max(0, 5 - sb.length())));
+        if (sb.length() < PRECISION) {
+            sb.append("0".repeat(Math.max(0, PRECISION - sb.length())));
         }
 
         return sb.toString();
